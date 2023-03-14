@@ -1,1 +1,1 @@
-Small project to test out swagger + ts + docker
+Small project to test out swagger + ts + mongoose

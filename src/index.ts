@@ -1,18 +1,26 @@
 import express, { Express, Request, Response } from 'express';
 import * as dotenv from 'dotenv'
+import * as bodyParser from 'body-parser'
 import * as mongoose from "mongoose";
 import Book from "./models";
 dotenv.config()
 const app: Express = express();
+app.use(bodyParser.urlencoded())
+app.use(bodyParser.json())
+
 
 app.get('/', async (req: Request, res: Response) => {
-  res.send('yo');
-  const doc = await Book.create({ 
-    title: "title",
-    author: "auth",
-    rating: "1.111",
-    desc: "yo"
-  });
+  res.send("swagger")
+});
+
+app.post('/addBook', async (req: Request, res: Response) => {
+  console.log(req.body)
+  try {
+  await Book.create(req.body);
+  res.send({"message": "success"})
+  } catch (err) {
+    res.send({"message": err})
+  }
 });
 
 app.listen(8087, () => {
