@@ -18,17 +18,20 @@ app.post('/addBook', async (req: Request, res: Response) => {
   try {
   await Book.create(req.body);
   res.send({"message": "success"})
-  } catch (err) {
-    res.send({"message": err})
+  } catch (err: any) {
+    res.send({"message": err._message})
+    console.log(err)
   }
 });
+
+
 
 app.listen(8087, () => {
   console.log(`[server]: Server is running at http://localhost:8087`);
 });
 
 mongoose.connect(process.env.URL as string).then(() => {
-  console.log("[server]: Successfully Connected!");
+  console.log("[server]: Successfully connected to database!");
 }).catch( (err: any) => {
   console.error(err)
 })
