@@ -29,11 +29,11 @@ const options: swaggerJsdoc.Options = {
       },
     ],
   },
-  apis: ["./index.ts"],
+  apis: [`${__dirname}/docs.ts`],
 };
 const specs = swaggerJsdoc(options);
 app.use(
-  "/",
+  "/docs",
   swaggerUi.serve,
   swaggerUi.setup(specs)
 );
@@ -53,6 +53,10 @@ app.get('/books', async (req: Request, res: Response) => {
   Book.find({}).then((books) => {
     res.send(books);
     });
+});
+
+app.get('/', async (req: Request, res: Response) => {
+  res.redirect('docs')
 });
 
 app.listen(8087, () => {
